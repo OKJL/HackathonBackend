@@ -32,13 +32,13 @@ export const createUser = functions
 
     const data: User = {
       "UID": user.uid,
-      "NRIC": null,
+      "NRIC/FIN/PPT": null,
       "Full Name": null,
-      "Contact Number": !user.phoneNumber ? null : user.phoneNumber,
-      "Resident Of Singapore": null,
-      "Device ID": null,
-      "~updatedAt": admin.firestore.FieldValue.serverTimestamp(),
-      "~createdAt": admin.firestore.FieldValue.serverTimestamp(),
+      "Contact Number": null,
+      "Country Name": null,
+      "FCM Tokens": null,
+      "updatedAt": admin.firestore.FieldValue.serverTimestamp(),
+      "createdAt": admin.firestore.FieldValue.serverTimestamp(),
     }
 
     return ref.set(data, { merge: true }).catch(console.error)
