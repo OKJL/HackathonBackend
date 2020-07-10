@@ -2,6 +2,7 @@ import * as admin from "firebase-admin"
 import * as functions from "firebase-functions"
 
 import { User } from "./models/User"
+import { Notify } from "./models/Notify"
 
 /*
  * Initialize server-side Firebase Admin SDK.
@@ -42,4 +43,40 @@ export const createUser = functions
     }
 
     return ref.set(data, { merge: true }).catch(console.error)
+  })
+
+export const notifyUser = functions
+  .region(DEPLOYMENT_REGION)
+  .firestore.document("notifiers/{notifyID}")
+  .onCreate((snap, ctx) => {
+    const data = <Notify>snap.data()
+
+    switch (data["Message Type"]) {
+      case "ALL_USERS":
+        return Promise.resolve()
+      case "COUNTRY_NAME":
+        return Promise.resolve()
+      case "TIMEFRAME_RANGE":
+        return Promise.resolve()
+      case "SPECIFIC_TOKEN":
+        if (data["FCM Token ID"] === undefined) return
+
+        console.log("Message Title: " + data["Message Title"])
+        console.log("Message Body: " + data["Message Body"])
+
+        const payload: admin.messaging.MessagingPayload = {
+          notification: {
+            sound: "default",
+            title: data["Message Title"],
+            body: data["Message Body"],
+          },
+        }
+
+        return admin
+          .messaging()
+          .sendToDevice(data["FCM Token ID"], payload)
+          .catch(console.error)
+      default:
+        return Promise.resolve()
+    }
   })
