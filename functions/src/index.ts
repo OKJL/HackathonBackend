@@ -48,13 +48,21 @@ export const createUser = functions
 export const notifyUser = functions
   .region(DEPLOYMENT_REGION)
   .firestore.document("notifiers/{notifyID}")
-  .onCreate((snap, ctx) => {
+  .onCreate(async (snap, ctx) => {
     let payload
     const data = <Notify>snap.data()
 
     switch (data["Message Type"]) {
       case "ALL_USERS":
-        return Promise.resolve()
+        payload = <admin.messaging.MessagingPayload>{
+          notification: {
+            sound: "default",
+            title: data["Message Title"],
+            body: data["Message Body"],
+          },
+        }
+
+        return admin.messaging().sendToTopic("ALL_USERS", payload)
       case "COUNTRY_NAME":
         if (data["Country Name"] === undefined) return
 
@@ -67,8 +75,6 @@ export const notifyUser = functions
         }
 
         return admin.messaging().sendToTopic(data["Country Name"], payload)
-      case "TIMEFRAME_RANGE":
-        return Promise.resolve()
       case "SPECIFIC_TOKEN":
         if (data["FCM Token ID"] === undefined) return
 

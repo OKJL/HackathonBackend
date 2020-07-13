@@ -1,5 +1,1 @@
-export type NotifyType =
-  | "ALL_USERS"
-  | "COUNTRY_NAME"
-  | "TIMEFRAME_RANGE"
-  | "SPECIFIC_TOKEN"
+export type NotifyType = "ALL_USERS" | "COUNTRY_NAME" | "SPECIFIC_TOKEN"

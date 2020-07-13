@@ -5,7 +5,5 @@ export interface Notify {
   "Message Body": string | undefined
   "Message Type": NotifyType
   "Country Name"?: string
-  "Timeframe Start"?: number | null
-  "Timeframe End"?: number | null
   "FCM Token ID"?: string | string[]
 }
