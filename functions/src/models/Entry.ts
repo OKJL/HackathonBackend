@@ -1,5 +1,3 @@
-import { admin } from "firebase-admin/lib/auth"
-
 import { firestore } from "firebase-admin"
 
 export interface Entry {

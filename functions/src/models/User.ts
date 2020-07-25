@@ -7,6 +7,5 @@ export interface User {
   "Contact Number": string | null
   "Country Name": string | null
   "FCM Tokens": firestore.FieldValue | null
-  "updatedAt": firestore.FieldValue
   "createdAt": firestore.FieldValue
 }

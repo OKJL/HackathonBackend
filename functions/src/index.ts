@@ -38,7 +38,6 @@ export const createUser = functions
       "Contact Number": null,
       "Country Name": null,
       "FCM Tokens": null,
-      "updatedAt": admin.firestore.FieldValue.serverTimestamp(),
       "createdAt": admin.firestore.FieldValue.serverTimestamp(),
     }
 
